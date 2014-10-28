@@ -1,0 +1,70 @@
+This is the README file of the final project of OMSCS class: Artificial Intelligence for Robotics
+
+There is only one member of the team: Handong Ma (hma48, GTID: 903050247) handongma.work@gmail.com
+
+* All codes are from Handong Ma with several references online, any feedback is wellcomed!
+
+########################################################################################################################
+First, the Structure of submitted files:
+
+FOLDERS:
+--root
+  --src: all sources are in the folder
+    --lib: all library files are listed in the folder
+  --data: the input data of given format (testing_video-centroid_data)
+  --result: the predicted list will be saved in this folder, also well be printed and drawed on the screen and returned if you use the proper code to get the result (see following)
+
+SCRIPTS:
+***********
+ ./root folder is defaulted runing folder, if not, you may need to change the path of input file names in main.py (around line: 283, search for: "targetFile" or "outputFile")
+***********
+./src/main.py main program contain all process needed for performing prediction
+./src/test.py  test run of the main.py, you can use any other program to get the returned list easily as what this file does
+./src/lib/matrix.py contain matrix class from class, modifications made by Handong Ma
+./src/lib/robot.py contain robot class from class, modifications made by Handong Ma
+./src/lib/util.py  contain basic functions used by this project (main.py)
+./src/lib/filter.py contain code that performs KL-filter, calculate necessary information of the project
+
+#########################################################################################################################
+How to run the code:
+1. go to ./root folder (which contains src/, result/, data/ folders)
+2. make sure the input file is in the ./data folder, if want to rename the file, you need to modify the 283 line in main.py to proper file name
+3. python ./src/main.py the output prediction will be printed on the screen and trace will be drawn (remind that the x,y aixes is slightly different, but the predicted list is not affected), the outfile will be saved to ./result folder
+4. python ./src/test.py  you can use code in the test.py to get the returned list
+
+Sample screen output
+########Detected Boundary########
+X_upper: > 681.405
+X_low: < 167.595
+Y_upper: > 418.32
+Y_lower: < 85.68
+#########DETAIL OF REBOT#########
+Average Speed of the robot:  9.44883797267
+Turning Preference:  0.00366824221437
+Heading Preference:  -0.042180525816
+Heading Preference When Hit Boundary:  0.485977585553
+Turning Preference When Hit Boundary:  -0.61837730981
+########Cross Validation#########
+Performed  61  predictions (every 20 frames) for the whole video: 
+Total average ERROR for predictions : 
+97.594930177
+#############The Predicted List#########
+[[616, 317], [610, 324], [605, 332], [599, 340], [593, 347], [587, 354], [581, 361], [574, 367], [567, 374], [559, 379], [551, 385], [544, 390], [536, 395], [527, 400], [519, 404], [510, 408], [501, 411], [492, 414], [483, 417], [474, 419], [465, 417], [456, 413], [448, 410], [439, 406], [431, 401], [423, 397], [415, 392], [407, 386], [399, 380], [392, 374], [385, 368], [378, 361], [372, 355], [366, 347], [360, 340], [354, 332], [349, 324], [344, 316], [340, 308], [335, 300], [332, 291], [328, 282], [325, 273], [322, 264], [320, 255], [318, 246], [317, 236], [315, 227], [315, 218], [314, 208], [314, 199], [315, 189], [316, 180], [317, 171], [319, 161], [321, 152], [323, 143], [326, 134], [329, 125], [333, 116], [336, 108], [341, 99], [345, 91]]
+Prediction successfully saved in ./result folder!
+#############Draw Prediction############
+Now drawing the predicted path after video ends:
+(this should be a drawing)
+
+
+##########################################################################################################################
+Stractgies used for prediction:
+
+Several stratgies have been implemented in the code:
+1.Kalman-Filter in eliminating the noise and predict the right positions
+2. Localization of the points (robot) in the screen
+3. Statistical based detection of box boundaries (only apply to strait line boundary)
+4. Prediction of robot's location,speed, heading direction, accelation, whether hit boundary or not
+5. Statistical and rule based method in detecting the preference of the robot when hit/not hit: speed, turning angle, accelation preference, reactions when hitting the boundary with different angles.
+6. Rule based method in preventing the robot struct in a certain place
+7. Cross validation method in exaiming the error rate of the prediction method and optimize the parameters 
+
